@@ -1,0 +1,29 @@
+{
+	"$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+	"formatter": {
+		"formatWithErrors": true
+	},
+	"organizeImports": {
+		"enabled": true
+	},
+	"linter": {
+		"rules": {
+			"nursery": {
+				"useSortedClasses": "error"
+			},
+			"a11y": {
+				"noSvgWithoutTitle": "off"
+			},
+			"correctness": {
+				"noUnusedImports": "warn",
+				"useJsxKeyInIterable": "off"
+			},
+			"suspicious": {
+				"noReactSpecificProps": "error"
+			}
+		}
+	},
+	"files": {
+		"ignore": ["**/theme.css", "dist/**"]
+	}
+}

@@ -1,0 +1,24 @@
+{
+	"name": "mental-health",
+	"license": "MIT",
+	"author": "Zakhar Nycheporuk <nycheporuk.zakhar@gmail.com>",
+	"type": "module",
+	"scripts": {
+		"start": "vite",
+		"dev": "vite",
+		"build": "vite build",
+		"serve": "vite preview"
+	},
+	"dependencies": {
+		"@solidjs/router": "^0.14.7",
+		"solid-js": "^1.9.1"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^1.9.2",
+		"@tailwindcss/vite": "^4.0.0-alpha.25",
+		"tailwindcss": "^4.0.0-alpha.25",
+		"vite": "^6.0.0-beta.2",
+		"vite-plugin-solid": "^2.10.2"
+	},
+	"trustedDependencies": ["@biomejs/biome"]
+}

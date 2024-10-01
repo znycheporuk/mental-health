@@ -1,0 +1,24 @@
+{
+	"tab_size": 2,
+	"hard_tabs": true,
+	"formatter": {
+		"external": {
+			"command": "./node_modules/.bin/biome",
+			"arguments": [
+				"check",
+				"--stdin-file-path",
+				"{buffer_path}",
+				"--write",
+				"--unsafe"
+			]
+		}
+	},
+	"languages": {
+		"CSS": {
+			"formatter": "prettier"
+		},
+		"HTML": {
+			"formatter": "prettier"
+		}
+	}
+}
