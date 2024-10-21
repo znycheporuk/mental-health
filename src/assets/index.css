@@ -1,0 +1,38 @@
+@import "theme.css";
+
+@font-face {
+	font-family: "Comic Sans";
+	src: url("/ComicSans.woff2") format("woff2");
+}
+
+body {
+	background: var(--color-base);
+	color: var(--color-text);
+	min-height: 100dvh;
+	font-family: "Comic Sans", "Comic Sans MS", sans-serif;
+	& > * {
+		max-width: var(--width-page-width);
+	}
+}
+
+:focus {
+	outline: none;
+}
+
+:focus-visible {
+	transition-duration: 0s;
+	outline: 3px solid var(--color-teal);
+	outline-offset: 4px;
+}
+
+@layer utilities {
+	.field-sizing-content {
+		field-sizing: content;
+	}
+}
+
+@media not (prefers-reduced-motion: reduce) {
+	html {
+		scroll-behavior: smooth;
+	}
+}

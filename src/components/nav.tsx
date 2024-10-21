@@ -10,7 +10,7 @@ import { SettingsIcon } from "./icons/settings";
 export function Nav() {
 	const { lang, t } = useTranslation();
 	return (
-		<nav class="-translate-x-1/2 fixed bottom-0 left-1/2 w-full max-w-page-width bg-base p-4">
+		<nav class="-translate-x-1/2 fixed bottom-0 left-1/2 w-full bg-base p-4">
 			<ul class="flex justify-between">
 				<li class="flex">
 					<A
