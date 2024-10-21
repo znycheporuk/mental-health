@@ -9,10 +9,6 @@ export default defineConfig({
 	},
 	build: {
 		target: "esnext",
-		cssMinify: "lightningcss",
 		sourcemap: true,
-	},
-	css: {
-		transformer: "lightningcss",
 	},
 });
