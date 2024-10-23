@@ -1,4 +1,3 @@
-const dev = true;
 const CACHE_NAME = "assets";
 const CACHE_EXPIRATION_TIME = 30 * 24 * 60 * 60 * 1000;
 
@@ -39,7 +38,7 @@ self.addEventListener("fetch", (event) => {
 							.then((cache) => cache.put(event.request, updatedResponse));
 					});
 			}
-			return (cachedResponse && !dev) || fetchPromise;
+			return cachedResponse || fetchPromise;
 		}),
 	);
 });

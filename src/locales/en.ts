@@ -7,4 +7,7 @@ export const dict = {
 	insights: "Insights",
 	emotions: "Emotions",
 	addEvent: "Add event",
+	login: "Login",
+	register: "Register",
+	logout: "Logout",
 } satisfies Translations;
