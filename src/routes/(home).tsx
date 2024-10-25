@@ -1,6 +1,5 @@
-import { useTranslation } from "../shared/use-translation";
+import { t } from "../shared/lang";
 
 export function Home() {
-	const { t } = useTranslation();
 	return <>{t()?.mood}</>;
 }
