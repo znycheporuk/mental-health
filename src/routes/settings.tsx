@@ -1,5 +1,5 @@
 import { A } from "@solidjs/router";
-import { langLink, t } from "../shared/lang";
+import { langLink, t } from "~/shared/lang";
 
 export function Settings() {
 	return (
@@ -10,7 +10,7 @@ export function Settings() {
 					{t()?.login}
 				</a>
 				<a href={langLink("register")} class="block">
-					{t()?.register}
+					{t()?.createAccount}
 				</a>
 			</div>
 			<div class="mt-4 flex flex-wrap gap-x-4 gap-y-2 rounded-2xl bg-crust p-4">
