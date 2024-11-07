@@ -1,9 +1,11 @@
-import type { RouteSectionProps } from "@solidjs/router";
+import { type RouteSectionProps, useNavigate } from "@solidjs/router";
 import { Match, Switch } from "solid-js";
+import { createGuest } from "~/features/auth/guest";
 import { langLink, t } from "~/shared/lang";
 
 export function Onboarding(props: RouteSectionProps) {
 	const step = () => props.location.query.step;
+	const navigate = useNavigate();
 	return (
 		<Switch>
 			<Match when={step() === "1" || !step()}>
@@ -18,7 +20,14 @@ export function Onboarding(props: RouteSectionProps) {
 				<div class="relative grid gap-2 [&>*]:rounded [&>*]:bg-crust [&>*]:p-2 [&>*]:after:absolute [&>*]:after:right-4 [&>*]:after:content-['>']">
 					<a href={langLink("login")}>{t()?.login}</a>
 					<a href={langLink("register")}>{t()?.createAccount}</a>
-					<button type="button" class="text-left">
+					<button
+						type="button"
+						class="text-left"
+						onClick={async () => {
+							await createGuest();
+							navigate(langLink("/"));
+						}}
+					>
 						{t()?.continueAsGuest}
 					</button>
 				</div>

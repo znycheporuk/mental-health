@@ -1,5 +1,5 @@
 import { A } from "@solidjs/router";
-import { langLink, t } from "../shared/lang";
+import { langLink, t } from "~/shared/lang";
 import { CalendarIcon } from "./icons/calendar";
 import { ChartIcon } from "./icons/chart";
 import { FaceContentIcon } from "./icons/face-content";

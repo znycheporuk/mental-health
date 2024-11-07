@@ -1,12 +1,7 @@
-import { ulid } from "ulid";
-import type { OnlyRequire } from "../shared/types";
-
 export type User = {
 	id: string;
-	username: string;
-	password: string;
-	email?: string;
-	salt: string;
+	username?: string;
+	isActive?: boolean;
 	createdAt: string;
 	updatedAt: string;
 };
@@ -47,17 +42,12 @@ let db: IDBDatabase | null = null;
 
 openRequest.onupgradeneeded = () => {
 	const db = openRequest.result;
-	db.createObjectStore("users", { keyPath: "id" }).createIndex(
-		"createdAt",
-		"createdAt",
-	);
+	db.createObjectStore("users", { keyPath: "id" });
 	db.createObjectStore("emotions", { keyPath: "id" }).createIndex(
-		"createdAt",
-		"createdAt",
+		"userId",
+		"userId",
 	);
-	db.createObjectStore("emotionLevels", {
-		keyPath: ["eventId", "emotionId"],
-	}).createIndex("createdAt", "createdAt");
+	db.createObjectStore("emotionLevels", { keyPath: ["eventId", "emotionId"] });
 	db.createObjectStore("events", { keyPath: "id" }).createIndex(
 		"createdAt",
 		"createdAt",
@@ -84,10 +74,9 @@ function getDb(): Promise<IDBDatabase> {
 	});
 }
 
-function createStorage<
-	T extends User | Emotion | EmotionLevel | Event,
-	P extends string | string[] = string | string[],
->(storeName: string, keyPath: P) {
+function createStorage<T extends User | Emotion | EmotionLevel | Event>(
+	storeName: string,
+) {
 	return {
 		async getAll(): Promise<T[]> {
 			const db = await getDb();
@@ -117,59 +106,17 @@ function createStorage<
 				};
 			});
 		},
-		async add(item: Omit<T, "id" | "createdAt" | "updatedAt">) {
+		async put(item: T) {
 			const db = await getDb();
 			return new Promise<void>((resolve, reject) => {
 				const tx = db.transaction(storeName, "readwrite");
 				const store = tx.objectStore(storeName);
-				const request = store.add({
-					...item,
-					id: keyPath === "id" ? ulid() : undefined,
-					createdAt: new Date().toISOString(),
-					updatedAt: new Date().toISOString(),
-				});
+				const request = store.put(item);
 				request.onsuccess = () => {
 					resolve();
 				};
 				request.onerror = () => {
 					reject(request.error);
-				};
-			});
-		},
-		async update(
-			item: T extends EmotionLevel
-				? OnlyRequire<T, "eventId" | "emotionId">
-				: // @ts-expect-error
-					OnlyRequire<T, "id">,
-		) {
-			const db = await getDb();
-			return new Promise<void>((resolve, reject) => {
-				const tx = db.transaction(storeName, "readwrite");
-				const store = tx.objectStore(storeName);
-
-				const key = Array.isArray(keyPath)
-					? // @ts-expect-error
-						keyPath.map((k) => item[k])
-					: // @ts-expect-error
-						item.id;
-				store.get(key).onsuccess = (event) => {
-					// @ts-expect-error
-					const existing = event.target.result;
-					if (!existing) {
-						reject(new Error(`${storeName} not found`));
-						return;
-					}
-					const request = store.put({
-						...existing,
-						...item,
-						updatedAt: new Date().toISOString(),
-					});
-					request.onsuccess = () => {
-						resolve();
-					};
-					request.onerror = () => {
-						reject(request.error);
-					};
 				};
 			});
 		},
@@ -192,11 +139,8 @@ function createStorage<
 }
 
 export const storage = {
-	users: createStorage<User>("users", "id"),
-	emotions: createStorage<Emotion>("emotions", "id"),
-	emotionLevels: createStorage<EmotionLevel>("emotionLevels", [
-		"eventId",
-		"emotionId",
-	]),
-	events: createStorage<Event>("events", "id"),
+	users: createStorage<User>("users"),
+	emotions: createStorage<Emotion>("emotions"),
+	emotionLevels: createStorage<EmotionLevel>("emotionLevels"),
+	events: createStorage<Event>("events"),
 };
